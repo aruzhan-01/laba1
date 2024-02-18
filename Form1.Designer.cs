@@ -342,6 +342,7 @@
             richTextBox2.Size = new Size(926, 169);
             richTextBox2.TabIndex = 11;
             richTextBox2.Text = "";
+            richTextBox2.TextChanged += richTextBox2_TextChanged;
             // 
             // CreateButton
             // 
@@ -365,6 +366,7 @@
             // 
             // Form1
             // 
+            AllowDrop = true;
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(973, 610);
@@ -383,6 +385,11 @@
             Name = "Form1";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Form1";
+            //Load += Form1_Load;
+            //TextChanged += Form1_TextChanged;
+            DragDrop += Form1_DragDrop;
+            DragEnter += Form1_DragEnter;
+            //Validated += Form1_Validated;
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
             ResumeLayout(false);

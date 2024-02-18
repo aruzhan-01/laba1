@@ -1,5 +1,7 @@
+using Microsoft.VisualBasic.Devices;
 using System;
 using System.IO;
+using System.Reflection.Emit;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
@@ -10,11 +12,14 @@ namespace TextEditor1502
         public Form1()
         {
             InitializeComponent();
-
+            var button = new System.Windows.Forms.Button { Location = new Point(10, 90), Text = "Изменить размер текста" };
+            button.Click += button1_Click;
+            Controls.Add(button);
         }
         private void button1_Click(object sender, EventArgs e)
         {
-
+            richTextBox1.Font = new Font(richTextBox1.Font.FontFamily, 20);
+            richTextBox2.Font = new Font(richTextBox2.Font.FontFamily, 20);
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -44,7 +49,28 @@ namespace TextEditor1502
         private void richTextBox1_TextChanged(object sender, EventArgs e)
         {
 
+            string[] keywords = { "if", "else", "while", "for", "switch", "case", "break", "default", "return" }; int start = richTextBox1.SelectionStart;
+            foreach (string keyword in keywords)
+            {
+                int index = 0; while (index < richTextBox1.Text.Length)
+                {
+                    int startIndex = richTextBox1.Find(keyword, index, RichTextBoxFinds.WholeWord);
+                    if (startIndex == -1)
+                    {
+                        break;
+                    }
+                    richTextBox1.SelectionStart = startIndex; richTextBox1.SelectionLength = keyword.Length;
+                    richTextBox1.SelectionColor = Color.Blue; richTextBox1.SelectionFont = new Font(richTextBox1.Font, FontStyle.Bold);
+                    index = startIndex + keyword.Length;
+                }
+            }
+            richTextBox1.SelectionStart = start;
+            richTextBox1.SelectionColor = Color.Black;
+        
+
         }
+       
+     
 
         private void SaveTextToFile(string textToSave)
         {
@@ -112,7 +138,7 @@ namespace TextEditor1502
 
         private void вызовСправкиToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            MessageBox.Show(" Создать-создаём файл\r\nОткрыть-открываем файл\r\nСохранить-сохраняем файл\r\nВыход-выход из программы\r\nОтменить-отмена\r\nПовторить-повтор\r\nВырезать-вырезаем\r\nКопировать-копируем\r\nВставить-вставляем\r\nУдалить-удаляем\r\nВыделить все-выделяем всё");
         }
         // Кнопка "Копировать"
         private void CopyButton_Click(object sender, EventArgs e)
@@ -179,6 +205,7 @@ namespace TextEditor1502
 
             }
         }
+
 
 
         private void UndoButton_Click(object sender, EventArgs e)
@@ -300,5 +327,40 @@ namespace TextEditor1502
         {
             richTextBox2.Text = richTextBox1.Text;
         }
+
+        private void Form1_DragDrop(object sender, DragEventArgs e)
+        {
+            // Получение списка файлов, перетаскиваемых на элемент управления 
+            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+            // Обработка каждого файла             
+            {
+                foreach (string file in files)
+                    using (StreamReader sr = new StreamReader(file))
+                    {
+                        string line;
+                        richTextBox1.Clear(); while ((line = sr.ReadLine()) != null)
+                        {    // Делаем с прочитанной строкой
+                            richTextBox1.AppendText(line);
+                        }
+                    }
+            }
+
+        }
+
+        private void Form1_DragEnter(object sender, DragEventArgs e)
+        {
+            // Проверка, что перетаскивается файл            
+            {
+                if (e.Data.GetDataPresent(DataFormats.FileDrop)) e.Effect = DragDropEffects.Copy;
+            }
+
+        }
+
+        private void  richTextBox2_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+
     }
 }
