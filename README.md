@@ -16,6 +16,7 @@
 <p></p>
 <p></p>
 <img src = "test.jpg" style="width: 700px">
+<img src = "12.png" style="width: 700px">
     </body>
 
 </html>
