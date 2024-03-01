@@ -21,7 +21,7 @@ public class Lexeme
 public enum LexemeType
 {
 
-    Keyword1,
+    
     Keyword2,
     DataType,
     Equally,
@@ -31,8 +31,6 @@ public enum LexemeType
     Delimiter,
     Identifier,
     Number,
-    True,
-    False,
     Invalid
 }
 

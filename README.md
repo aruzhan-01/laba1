@@ -10,7 +10,7 @@
 <p></p>
 <p></p>
 <p></p>
-<img src = "avtomat.jpg" style="width: 700px">
+<img src = "схема.png" style="width: 700px">
 <p>Тестовые примеры:</p>
 <p></p>
 <p></p>
