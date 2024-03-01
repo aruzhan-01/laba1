@@ -10,8 +10,7 @@
 <p></p>
 <p></p>
 <p></p>
-<img src = "![avtomat](https://github.com/aruzhan-01/laba1/assets/115704957/d52c9de6-59d9-49cb-bb0a-5d3f7b294cc3)
-" style="width: 700px">
+<img src = "avtomat.jpg" style="width: 700px">
 <p>Тестовые примеры:</p>
 <p></p>
 <p></p>
