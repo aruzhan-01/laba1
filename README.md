@@ -15,7 +15,7 @@
 <p></p>
 <p></p>
 <p></p>
-<img src = "C:\Users\kozha\Downloads\тфяик\TextEditor1502" style="width: 700px">
+<img src = "test.jpg" style="width: 700px">
     </body>
 
 </html>
