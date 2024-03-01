@@ -332,13 +332,15 @@ namespace TextEditor1502
 {
 
 { LexemeType.Keyword2, 1 },
-{ LexemeType.Delimiter, 4 },
+{ LexemeType.Delimiter, 13 },
 { LexemeType.Identifier, 3 },
 { LexemeType.DataType, 2 },
 { LexemeType.Equally, 6 },
-//{ LexemeType.Plus, 7 },
-//{ LexemeType.Minus, 8 },
+{ LexemeType.Plus, 11 },
+{ LexemeType.Minus, 12 },
 { LexemeType.Semicolon, 9 },
+{ LexemeType.True, 4 }, 
+{ LexemeType.False, 5 },
 { LexemeType.Number, 7 },
 { LexemeType.Invalid, 10 }
 };
@@ -348,9 +350,11 @@ namespace TextEditor1502
             string[] delimiters = { " " };
             string[] dataTypes = { "int" };
             string[] equallies = { "=" };
-            //string[] pluses = { "+" };
-           // string[] minuses = { "-" };
+            string[] pluses = { "+" };
+            string[] minuses = { "-" };
             string[] semicolones = { ";" };
+            string[] trues = { "true" };
+            string[] falses = { "false" };
 
 
             List<Lexeme> lexemes = new List<Lexeme>();
@@ -404,7 +408,7 @@ namespace TextEditor1502
                 if (found) continue;
 
                 //+
-               /*foreach (string op in pluses)
+               foreach (string op in pluses)
                 {
                     if (input.Substring(position).StartsWith(op))
                     {
@@ -416,6 +420,28 @@ namespace TextEditor1502
                 }
 
                 if (found) continue;
+                // true
+                foreach (string op in trues)
+                {
+                    if (input.Substring(position).StartsWith(op))
+                    {
+                        lexemes.Add(new Lexeme(lexemeCodes[LexemeType.True], LexemeType.True, input, position, position + op.Length - 1));
+                        position += op.Length;
+                        found = true;
+                        break;
+                    }
+                }
+                // false
+                foreach (string op in falses)
+                {
+                    if (input.Substring(position).StartsWith(op))
+                    {
+                        lexemes.Add(new Lexeme(lexemeCodes[LexemeType.False], LexemeType.False, input, position, position + op.Length - 1));
+                        position += op.Length;
+                        found = true;
+                        break;
+                    }
+                }
 
                 //-
                 foreach (string op in minuses)
@@ -428,7 +454,7 @@ namespace TextEditor1502
                         break;
                     }
                 }
-               */
+               
                 if (found) continue;
 
                 //;

@@ -26,11 +26,13 @@ public enum LexemeType
     DataType,
     Equally,
     Semicolon,
-    //Plus,
-   // Minus,
+    Plus,
+    Minus,
     Delimiter,
     Identifier,
     Number,
+    True,
+    False,
     Invalid
 }
 
