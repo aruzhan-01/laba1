@@ -3,10 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34607.119
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextEditor1502", "TextEditor1502.csproj", "{7C37E69A-E6EC-4EEE-A9C7-612239EE74F4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TextEditor1502", "TextEditor1502.csproj", "{7C37E69A-E6EC-4EEE-A9C7-612239EE74F4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Элементы решения", "Элементы решения", "{2ECBAFE9-00FE-4CFA-9FB0-DE31743F3576}"
 	ProjectSection(SolutionItems) = preProject
+		const.cs = const.cs
 		form2.cs = form2.cs
 	EndProjectSection
 EndProject

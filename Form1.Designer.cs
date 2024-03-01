@@ -63,17 +63,36 @@
             справкаToolStripMenuItem = new ToolStripMenuItem();
             вызовСправкиToolStripMenuItem = new ToolStripMenuItem();
             оПрограммеToolStripMenuItem = new ToolStripMenuItem();
-            richTextBox1 = new RichTextBox();
-            richTextBox2 = new RichTextBox();
             CreateButton = new Button();
             OpenButton = new Button();
+            button1 = new Button();
+            button2 = new Button();
+            splitContainer1 = new SplitContainer();
+            splitContainer2 = new SplitContainer();
+            richTextBox1 = new RichTextBox();
+            dataGridView1 = new DataGridView();
+            code = new DataGridViewTextBoxColumn();
+            TokenType = new DataGridViewTextBoxColumn();
+            Token = new DataGridViewTextBoxColumn();
+            start = new DataGridViewTextBoxColumn();
+            End = new DataGridViewTextBoxColumn();
+            richTextBox2 = new RichTextBox();
             menuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
+            splitContainer1.Panel1.SuspendLayout();
+            splitContainer1.Panel2.SuspendLayout();
+            splitContainer1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)splitContainer2).BeginInit();
+            splitContainer2.Panel1.SuspendLayout();
+            splitContainer2.Panel2.SuspendLayout();
+            splitContainer2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
             // SaveButton
             // 
             SaveButton.Image = (Image)resources.GetObject("SaveButton.Image");
-            SaveButton.Location = new Point(175, 38);
+            SaveButton.Location = new Point(155, 3);
             SaveButton.Name = "SaveButton";
             SaveButton.Size = new Size(74, 57);
             SaveButton.TabIndex = 2;
@@ -83,7 +102,7 @@
             // CopyButton
             // 
             CopyButton.Image = (Image)resources.GetObject("CopyButton.Image");
-            CopyButton.Location = new Point(529, 38);
+            CopyButton.Location = new Point(479, 3);
             CopyButton.Name = "CopyButton";
             CopyButton.Size = new Size(83, 57);
             CopyButton.TabIndex = 5;
@@ -93,7 +112,7 @@
             // RedoButton
             // 
             RedoButton.Image = (Image)resources.GetObject("RedoButton.Image");
-            RedoButton.Location = new Point(458, 38);
+            RedoButton.Location = new Point(408, 3);
             RedoButton.Name = "RedoButton";
             RedoButton.Size = new Size(65, 57);
             RedoButton.TabIndex = 4;
@@ -103,7 +122,7 @@
             // UndoButton
             // 
             UndoButton.Image = (Image)resources.GetObject("UndoButton.Image");
-            UndoButton.Location = new Point(374, 38);
+            UndoButton.Location = new Point(324, 3);
             UndoButton.Name = "UndoButton";
             UndoButton.Size = new Size(78, 57);
             UndoButton.TabIndex = 3;
@@ -113,7 +132,7 @@
             // button7
             // 
             button7.Image = (Image)resources.GetObject("button7.Image");
-            button7.Location = new Point(695, 38);
+            button7.Location = new Point(566, 3);
             button7.Name = "button7";
             button7.Size = new Size(68, 57);
             button7.TabIndex = 7;
@@ -123,7 +142,7 @@
             // button8
             // 
             button8.Image = (Image)resources.GetObject("button8.Image");
-            button8.Location = new Point(618, 38);
+            button8.Location = new Point(640, 3);
             button8.Name = "button8";
             button8.Size = new Size(71, 57);
             button8.TabIndex = 6;
@@ -138,6 +157,7 @@
             menuStrip1.Size = new Size(973, 24);
             menuStrip1.TabIndex = 8;
             menuStrip1.Text = "menuStrip1";
+            menuStrip1.ItemClicked += menuStrip1_ItemClicked;
             // 
             // файлToolStripMenuItem
             // 
@@ -326,28 +346,10 @@
             оПрограммеToolStripMenuItem.Text = "О программе";
             оПрограммеToolStripMenuItem.Click += оПрограммеToolStripMenuItem_Click;
             // 
-            // richTextBox1
-            // 
-            richTextBox1.Location = new Point(23, 113);
-            richTextBox1.Name = "richTextBox1";
-            richTextBox1.Size = new Size(926, 243);
-            richTextBox1.TabIndex = 10;
-            richTextBox1.Text = "";
-            richTextBox1.TextChanged += richTextBox1_TextChanged;
-            // 
-            // richTextBox2
-            // 
-            richTextBox2.Location = new Point(23, 385);
-            richTextBox2.Name = "richTextBox2";
-            richTextBox2.Size = new Size(926, 169);
-            richTextBox2.TabIndex = 11;
-            richTextBox2.Text = "";
-            richTextBox2.TextChanged += richTextBox2_TextChanged;
-            // 
             // CreateButton
             // 
             CreateButton.Image = (Image)resources.GetObject("CreateButton.Image");
-            CreateButton.Location = new Point(23, 38);
+            CreateButton.Location = new Point(3, 3);
             CreateButton.Name = "CreateButton";
             CreateButton.Size = new Size(68, 57);
             CreateButton.TabIndex = 12;
@@ -357,12 +359,136 @@
             // OpenButton
             // 
             OpenButton.Image = (Image)resources.GetObject("OpenButton.Image");
-            OpenButton.Location = new Point(97, 38);
+            OpenButton.Location = new Point(77, 3);
             OpenButton.Name = "OpenButton";
             OpenButton.Size = new Size(72, 57);
             OpenButton.TabIndex = 13;
             OpenButton.UseVisualStyleBackColor = true;
             OpenButton.Click += OpenButton_Click;
+            // 
+            // button1
+            // 
+            button1.Image = (Image)resources.GetObject("button1.Image");
+            button1.Location = new Point(717, 3);
+            button1.Name = "button1";
+            button1.Size = new Size(68, 57);
+            button1.TabIndex = 14;
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click_1;
+            // 
+            // button2
+            // 
+            button2.Image = (Image)resources.GetObject("button2.Image");
+            button2.Location = new Point(791, 3);
+            button2.Name = "button2";
+            button2.Size = new Size(68, 57);
+            button2.TabIndex = 15;
+            button2.UseVisualStyleBackColor = true;
+            button2.Click += button2_Click_1;
+            // 
+            // splitContainer1
+            // 
+            splitContainer1.Dock = DockStyle.Fill;
+            splitContainer1.Location = new Point(0, 24);
+            splitContainer1.Name = "splitContainer1";
+            splitContainer1.Orientation = Orientation.Horizontal;
+            // 
+            // splitContainer1.Panel1
+            // 
+            splitContainer1.Panel1.Controls.Add(CreateButton);
+            splitContainer1.Panel1.Controls.Add(button2);
+            splitContainer1.Panel1.Controls.Add(OpenButton);
+            splitContainer1.Panel1.Controls.Add(button1);
+            splitContainer1.Panel1.Controls.Add(SaveButton);
+            splitContainer1.Panel1.Controls.Add(button7);
+            splitContainer1.Panel1.Controls.Add(UndoButton);
+            splitContainer1.Panel1.Controls.Add(button8);
+            splitContainer1.Panel1.Controls.Add(RedoButton);
+            splitContainer1.Panel1.Controls.Add(CopyButton);
+            // 
+            // splitContainer1.Panel2
+            // 
+            splitContainer1.Panel2.Controls.Add(splitContainer2);
+            splitContainer1.Size = new Size(973, 586);
+            splitContainer1.SplitterDistance = 113;
+            splitContainer1.TabIndex = 16;
+            // 
+            // splitContainer2
+            // 
+            splitContainer2.Dock = DockStyle.Fill;
+            splitContainer2.Location = new Point(0, 0);
+            splitContainer2.Name = "splitContainer2";
+            splitContainer2.Orientation = Orientation.Horizontal;
+            // 
+            // splitContainer2.Panel1
+            // 
+            splitContainer2.Panel1.Controls.Add(richTextBox1);
+            // 
+            // splitContainer2.Panel2
+            // 
+            splitContainer2.Panel2.Controls.Add(dataGridView1);
+            splitContainer2.Panel2.Controls.Add(richTextBox2);
+            splitContainer2.Size = new Size(973, 469);
+            splitContainer2.SplitterDistance = 172;
+            splitContainer2.TabIndex = 0;
+            // 
+            // richTextBox1
+            // 
+            richTextBox1.Dock = DockStyle.Fill;
+            richTextBox1.Location = new Point(0, 0);
+            richTextBox1.Name = "richTextBox1";
+            richTextBox1.Size = new Size(973, 172);
+            richTextBox1.TabIndex = 0;
+            richTextBox1.Text = "";
+            // 
+            // dataGridView1
+            // 
+            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { code, TokenType, Token, start, End });
+            dataGridView1.Location = new Point(3, 3);
+            dataGridView1.Name = "dataGridView1";
+            dataGridView1.Size = new Size(970, 290);
+            dataGridView1.TabIndex = 1;
+            // 
+            // code
+            // 
+            code.HeaderText = "Код";
+            code.Name = "code";
+            code.ReadOnly = true;
+            // 
+            // TokenType
+            // 
+            TokenType.HeaderText = "Тип лексемы";
+            TokenType.Name = "TokenType";
+            TokenType.ReadOnly = true;
+            // 
+            // Token
+            // 
+            Token.HeaderText = "Лексема";
+            Token.Name = "Token";
+            Token.ReadOnly = true;
+            // 
+            // start
+            // 
+            start.HeaderText = "Начало";
+            start.Name = "start";
+            start.ReadOnly = true;
+            // 
+            // End
+            // 
+            End.HeaderText = "Конец";
+            End.Name = "End";
+            End.ReadOnly = true;
+            // 
+            // richTextBox2
+            // 
+            richTextBox2.Dock = DockStyle.Fill;
+            richTextBox2.Location = new Point(0, 0);
+            richTextBox2.Name = "richTextBox2";
+            richTextBox2.ReadOnly = true;
+            richTextBox2.Size = new Size(973, 293);
+            richTextBox2.TabIndex = 0;
+            richTextBox2.Text = "";
             // 
             // Form1
             // 
@@ -370,28 +496,26 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(973, 610);
-            Controls.Add(OpenButton);
-            Controls.Add(CreateButton);
-            Controls.Add(richTextBox2);
-            Controls.Add(richTextBox1);
-            Controls.Add(button7);
-            Controls.Add(button8);
-            Controls.Add(CopyButton);
-            Controls.Add(RedoButton);
-            Controls.Add(UndoButton);
-            Controls.Add(SaveButton);
+            Controls.Add(splitContainer1);
             Controls.Add(menuStrip1);
             MainMenuStrip = menuStrip1;
             Name = "Form1";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Form1";
-            //Load += Form1_Load;
-            //TextChanged += Form1_TextChanged;
+            Text = "Compiler";
+            Load += Form1_Load;
             DragDrop += Form1_DragDrop;
             DragEnter += Form1_DragEnter;
-            //Validated += Form1_Validated;
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
+            splitContainer1.Panel1.ResumeLayout(false);
+            splitContainer1.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)splitContainer1).EndInit();
+            splitContainer1.ResumeLayout(false);
+            splitContainer2.Panel1.ResumeLayout(false);
+            splitContainer2.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)splitContainer2).EndInit();
+            splitContainer2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -431,9 +555,19 @@
         private ToolStripMenuItem исходныйКодПрограммыToolStripMenuItem;
         private ToolStripMenuItem вызовСправкиToolStripMenuItem;
         private ToolStripMenuItem оПрограммеToolStripMenuItem;
-        private RichTextBox richTextBox1;
-        private RichTextBox richTextBox2;
         private Button CreateButton;
         private Button OpenButton;
+        private Button button1;
+        private Button button2;
+        private SplitContainer splitContainer1;
+        private SplitContainer splitContainer2;
+        private RichTextBox richTextBox1;
+        private RichTextBox richTextBox2;
+        private DataGridView dataGridView1;
+        private DataGridViewTextBoxColumn code;
+        private DataGridViewTextBoxColumn TokenType;
+        private DataGridViewTextBoxColumn Token;
+        private DataGridViewTextBoxColumn start;
+        private DataGridViewTextBoxColumn End;
     }
 }

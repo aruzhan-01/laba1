@@ -66,11 +66,11 @@ namespace TextEditor1502
             }
             richTextBox1.SelectionStart = start;
             richTextBox1.SelectionColor = Color.Black;
-        
+
 
         }
-       
-     
+
+
 
         private void SaveTextToFile(string textToSave)
         {
@@ -325,7 +325,177 @@ namespace TextEditor1502
 
         private void пускToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            richTextBox2.Text = richTextBox1.Text;
+           // richTextBox2.Text = richTextBox1.Text;
+            string input = richTextBox1.Text;
+
+            Dictionary<LexemeType, int> lexemeCodes = new Dictionary<LexemeType, int>()
+{
+
+{ LexemeType.Keyword2, 1 },
+{ LexemeType.Delimiter, 4 },
+{ LexemeType.Identifier, 3 },
+{ LexemeType.DataType, 2 },
+{ LexemeType.Equally, 6 },
+//{ LexemeType.Plus, 7 },
+//{ LexemeType.Minus, 8 },
+{ LexemeType.Semicolon, 9 },
+{ LexemeType.Number, 7 },
+{ LexemeType.Invalid, 10 }
+};
+
+
+            string[] keyword2 = { "final" };
+            string[] delimiters = { " " };
+            string[] dataTypes = { "int" };
+            string[] equallies = { "=" };
+            //string[] pluses = { "+" };
+           // string[] minuses = { "-" };
+            string[] semicolones = { ";" };
+
+
+            List<Lexeme> lexemes = new List<Lexeme>();
+
+            int position = 0;
+            while (position < input.Length)
+            {
+                bool found = false;
+
+                //const
+                foreach (string keyword in keyword2)
+                {
+                    if (input.Substring(position).StartsWith(keyword))
+                    {
+                        lexemes.Add(new Lexeme(lexemeCodes[LexemeType.Keyword2], LexemeType.Keyword2, input, position, position + keyword.Length - 1));
+                        position += keyword.Length;
+                        found = true;
+                        break;
+                    }
+                }
+
+                if (found) continue;
+
+
+                //data type
+                foreach (string dataType in dataTypes)
+                {
+                    if (input.Substring(position).StartsWith(dataType))
+                    {
+                        lexemes.Add(new Lexeme(lexemeCodes[LexemeType.DataType], LexemeType.DataType, input, position, position + dataType.Length - 1));
+                        position += dataType.Length;
+                        found = true;
+                        break;
+                    }
+                }
+
+                if (found) continue;
+
+                //=
+                foreach (string op in equallies)
+                {
+                    if (input.Substring(position).StartsWith(op))
+                    {
+                        lexemes.Add(new Lexeme(lexemeCodes[LexemeType.Equally], LexemeType.Equally, input, position, position + op.Length - 1));
+                        position += op.Length;
+                        found = true;
+                        break;
+                    }
+                }
+
+                if (found) continue;
+
+                //+
+               /*foreach (string op in pluses)
+                {
+                    if (input.Substring(position).StartsWith(op))
+                    {
+                        lexemes.Add(new Lexeme(lexemeCodes[LexemeType.Equally], LexemeType.Plus, input, position, position + op.Length - 1));
+                        position += op.Length;
+                        found = true;
+                        break;
+                    }
+                }
+
+                if (found) continue;
+
+                //-
+                foreach (string op in minuses)
+                {
+                    if (input.Substring(position).StartsWith(op))
+                    {
+                        lexemes.Add(new Lexeme(lexemeCodes[LexemeType.Equally], LexemeType.Minus, input, position, position + op.Length - 1));
+                        position += op.Length;
+                        found = true;
+                        break;
+                    }
+                }
+               */
+                if (found) continue;
+
+                //;
+                foreach (string op in semicolones)
+                {
+                    if (input.Substring(position).StartsWith(op))
+                    {
+                        lexemes.Add(new Lexeme(lexemeCodes[LexemeType.Semicolon], LexemeType.Semicolon, input, position, position + op.Length - 1));
+                        position += op.Length;
+                        found = true;
+                        break;
+                    }
+                }
+
+
+
+                if (found) continue;
+
+                //_
+                foreach (string delimiter in delimiters)
+                {
+                    if (input.Substring(position).StartsWith(delimiter))
+                    {
+                        lexemes.Add(new Lexeme(lexemeCodes[LexemeType.Delimiter], LexemeType.Delimiter, input, position, position + delimiter.Length - 1));
+                        position += delimiter.Length;
+                        found = true;
+                        break;
+                    }
+                }
+                if (found) continue;
+
+                //name
+                if (char.IsLetter(input[position]))
+                {
+                    int start = position;
+                    while (position < input.Length && char.IsLetterOrDigit(input[position]))
+                    {
+                        position++;
+                    }
+                    string identifier = input.Substring(start, position - start);
+                    lexemes.Add(new Lexeme(lexemeCodes[LexemeType.Identifier], LexemeType.Identifier, input, start, position - 1));
+                }
+                //value
+                else if (char.IsDigit(input[position]))
+                {
+                    int start = position;
+                    while (position < input.Length && char.IsDigit(input[position]))
+                    {
+                        position++;
+                    }
+                    string number = input.Substring(start, position - start);
+                    lexemes.Add(new Lexeme(lexemeCodes[LexemeType.Number], LexemeType.Number, input, start, position - 1));
+                }
+                //error
+                else
+                {
+                    string invalid = input[position].ToString();
+                    lexemes.Add(new Lexeme(lexemeCodes[LexemeType.Invalid], LexemeType.Invalid, input, position, position));
+                    position++;
+                }
+            }
+
+            dataGridView1.Rows.Clear();
+            foreach (Lexeme lexeme in lexemes)
+            {
+                dataGridView1.Rows.Add(lexeme.Code, lexeme.Type, lexeme.Token, lexeme.StartPosition, lexeme.EndPosition);
+            }
         }
 
         private void Form1_DragDrop(object sender, DragEventArgs e)
@@ -356,11 +526,32 @@ namespace TextEditor1502
 
         }
 
-        private void  richTextBox2_TextChanged(object sender, EventArgs e)
+        private void richTextBox2_TextChanged(object sender, EventArgs e)
         {
 
         }
 
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            // Здесь можно добавить код для отображения справки или руководства пользователя
+            MessageBox.Show(" Создать-создаём файл\r\nОткрыть-открываем файл\r\nСохранить-сохраняем файл\r\nВыход-выход из программы\r\nОтменить-отмена\r\nПовторить-повтор\r\nВырезать-вырезаем\r\nКопировать-копируем\r\nВставить-вставляем\r\nУдалить-удаляем\r\nВыделить все-выделяем всё");
+        }
 
+        private void button2_Click_1(object sender, EventArgs e)
+        {
+            // Здесь можно добавить код для отображения информации о программе
+            MessageBox.Show("Программа разработана студенткой 3 курса группы АВТ-114 Кожахметовой Аружан");
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
+        }
     }
+
 }
