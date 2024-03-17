@@ -532,11 +532,11 @@ namespace TextEditor1502
 
             dataGridView1.Rows.Clear();
             CheckLexem(lexemes);
-            //foreach (Lexeme lexeme in lexemes)
-            //{
-            //    dataGridView1.Rows.Add(lexeme.Code, lexeme.Type, lexeme.Token, lexeme.StartPosition, lexeme.EndPosition);
-
-            //}
+            richTextBox1.Text = "";
+            foreach (Lexeme lexeme in lexemes)
+            {
+                richTextBox1.AppendText(lexeme.Token);
+            }
         }
 
         public void CheckLexem(List<Lexeme> lexemes)
@@ -555,9 +555,7 @@ namespace TextEditor1502
                             step++;
                         else
                         {
-                            dataGridView1.Rows.Add(1, lexeme.Type, "ќжидаетс€ объ€вление константы", lexeme.StartPosition, lexeme.EndPosition);
-                            step = 0;
-                            counterError++;
+                            lexemes.RemoveAt(i); i--;
                         }
                         break;
                     case 1:
@@ -565,9 +563,8 @@ namespace TextEditor1502
                             step++;
                         else
                         {
-                            dataGridView1.Rows.Add(2, lexeme.Type, "ќжидаетс€ тип константы", lexeme.StartPosition, lexeme.EndPosition);
-                            step = 0;
-                            counterError++;
+
+                            lexemes.RemoveAt(i); i--;
                         }
                         break;
                     case 2:
@@ -575,9 +572,8 @@ namespace TextEditor1502
                             step++;
                         else
                         {
-                            dataGridView1.Rows.Add(3, lexeme.Type, "ќжидаетс€ идентификатор константы", lexeme.StartPosition, lexeme.EndPosition);
-                            step = 0;
-                            counterError++;
+
+                            lexemes.RemoveAt(i); i--;
                         }
                         break;
                     case 3:
@@ -585,9 +581,8 @@ namespace TextEditor1502
                             step++;
                         else
                         {
-                            dataGridView1.Rows.Add(4, lexeme.Type, "ќжидаетс€ присваение константы", lexeme.StartPosition, lexeme.EndPosition);
-                            step = 0;
-                            counterError++;
+
+                            lexemes.RemoveAt(i); i--;
                         }
                         break;
                     case 4:
@@ -599,9 +594,8 @@ namespace TextEditor1502
                             step++;
                         else
                         {
-                            dataGridView1.Rows.Add(5, lexeme.Type, "ќжидаетс€ инициализаци€ константы", lexeme.StartPosition, lexeme.EndPosition);
-                            step = 0;
-                            counterError++;
+
+                            lexemes.RemoveAt(i); i--;
                         }
                         break;
                     case 5:
@@ -612,9 +606,8 @@ namespace TextEditor1502
                         }
                         else
                         {
-                            dataGridView1.Rows.Add(6, lexeme.Type, "ќжидаетс€ завершающа€ лексема.", lexeme.StartPosition, lexeme.EndPosition);
-                            step = 0;
-                            counterError++;
+
+                            lexemes.RemoveAt(i); i--;
                         }
                         break;
 
