@@ -70,6 +70,7 @@
             splitContainer1 = new SplitContainer();
             splitContainer2 = new SplitContainer();
             richTextBox1 = new RichTextBox();
+            textBox1 = new TextBox();
             dataGridView1 = new DataGridView();
             code = new DataGridViewTextBoxColumn();
             TokenType = new DataGridViewTextBoxColumn();
@@ -426,6 +427,7 @@
             // 
             // splitContainer2.Panel2
             // 
+            splitContainer2.Panel2.Controls.Add(textBox1);
             splitContainer2.Panel2.Controls.Add(dataGridView1);
             splitContainer2.Panel2.Controls.Add(richTextBox2);
             splitContainer2.Size = new Size(973, 469);
@@ -441,14 +443,24 @@
             richTextBox1.TabIndex = 0;
             richTextBox1.Text = "";
             // 
+            // textBox1
+            // 
+            textBox1.Location = new Point(765, 3);
+            textBox1.Name = "textBox1";
+            textBox1.Size = new Size(100, 23);
+            textBox1.TabIndex = 2;
+            textBox1.TextChanged += textBox1_TextChanged;
+            // 
             // dataGridView1
             // 
+            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridView1.Columns.AddRange(new DataGridViewColumn[] { code, TokenType, Token, start, End });
             dataGridView1.Location = new Point(3, 3);
             dataGridView1.Name = "dataGridView1";
-            dataGridView1.Size = new Size(970, 290);
+            dataGridView1.Size = new Size(756, 293);
             dataGridView1.TabIndex = 1;
+            dataGridView1.CellContentClick += dataGridView1_CellContentClick;
             // 
             // code
             // 
@@ -513,6 +525,7 @@
             splitContainer1.ResumeLayout(false);
             splitContainer2.Panel1.ResumeLayout(false);
             splitContainer2.Panel2.ResumeLayout(false);
+            splitContainer2.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)splitContainer2).EndInit();
             splitContainer2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
@@ -569,5 +582,6 @@
         private DataGridViewTextBoxColumn Token;
         private DataGridViewTextBoxColumn start;
         private DataGridViewTextBoxColumn End;
+        private TextBox textBox1;
     }
 }

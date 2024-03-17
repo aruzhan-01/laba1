@@ -3,7 +3,10 @@ using System;
 using System.IO;
 using System.Reflection.Emit;
 using System.Windows.Forms;
+using System.Text;
+using System.Collections.Generic;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using static TextEditor1502.Form1;
 
 namespace TextEditor1502
 {
@@ -15,7 +18,9 @@ namespace TextEditor1502
             var button = new System.Windows.Forms.Button { Location = new Point(10, 90), Text = "Изменить размер текста" };
             button.Click += button1_Click;
             Controls.Add(button);
+
         }
+
         private void button1_Click(object sender, EventArgs e)
         {
             richTextBox1.Font = new Font(richTextBox1.Font.FontFamily, 20);
@@ -284,19 +289,19 @@ namespace TextEditor1502
         private void грамматикаToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //this.Hide();
-            MessageBox.Show("В разработке");
+            MessageBox.Show("1) DEF -> final FINAL\r\n2) FINAL -> int INT\r\n3) INT -> letter ID\r\n4) ID -> letter ID | \"=\" ASSIGNTMENT\r\n5) ASSIGNTMENT -> ['+' | '-'] SIGN\r\n6) SIGN -> digit NUMBER\r\n7) NUMBER -> digit NUMBER | \";\"\r\n");
         }
 
         private void классификацияГрамматикиToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //this.Hide();
-            MessageBox.Show("В разработке");
+            MessageBox.Show("Классификация грамматики включает в себя следующие основные компоненты:\r\n1. Начальный символ: DEF\r\n2. Терминалы (терминальные символы): final, int, letter, '=', '+', '-', digit, ';'\r\n3. Нетерминалы (нетерминальные символы): DEF, FINAL, INT, ID, ASSIGNMENT, SIGN, NUMBER\r\n4. Правила вывода:\r\n   - DEF -> final FINAL\r\n   - FINAL -> int INT\r\n   - INT -> letter ID\r\n   - ID -> letter ID | \"=\" ASSIGNMENT\r\n   - ASSIGNMENT -> '+' | '-' SIGN\r\n   - SIGN -> digit NUMBER\r\n   - NUMBER -> digit NUMBER | \";\"\r\nТаким образом, данная грамматика описывает язык, который порождает цепочки символов, соответствующие определенным правилам вывода.");
         }
 
         private void методАнализаToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //this.Hide();
-            MessageBox.Show("В разработке");
+            MessageBox.Show("Нейтрализация ошибок (метод Айронса)");
         }
 
         private void диагностикаИНейтрализацияToolStripMenuItem_Click(object sender, EventArgs e)
@@ -314,7 +319,7 @@ namespace TextEditor1502
         private void списокЛитературыToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //this.Hide();
-            MessageBox.Show("В разработке");
+            MessageBox.Show("1. Шорников Ю.В. Теория и практика языковых процессоров : учеб. пособие / Ю.В. Шорников. – Новосибирск: Изд-во НГТУ, 2004.\r\n2. Gries D. Designing Compilers for Digital Computers. New York, Jhon Wiley, 1971. 493 p.\r\n3. Теория формальных языков и компиляторов [Электронный ресурс]/ Электрон. дан. URL: https://dispace.edu.nstu.ru/didesk/course/show/8594, свободный. Яз.рус. (дата обращения 01.04.2021).\r\n ");
         }
 
         private void исходныйКодПрограммыToolStripMenuItem_Click(object sender, EventArgs e)
@@ -322,10 +327,42 @@ namespace TextEditor1502
             //this.Hide();
             MessageBox.Show("В разработке");
         }
+        public class Lexeme
+        {
+            public int Code { get; set; }
+            public LexemeType Type { get; set; }
+            public string Token { get; set; }
+            public int StartPosition { get; set; }
+            public int EndPosition { get; set; }
+
+            public Lexeme(int code, LexemeType type, string input, int startPosition, int endPosition)
+            {
+                Code = code;
+                Type = type;
+                Token = input.Substring(startPosition, endPosition - startPosition + 1);
+                StartPosition = startPosition;
+                EndPosition = endPosition;
+            }
+        }
+
+        public enum LexemeType
+        {
+            Keyword2,
+            DataType,
+            Equally,
+            Semicolon,
+            Plus,
+            Minus,
+            Delimiter,
+            Identifier,
+            Number,
+            Invalid
+        }
+
 
         private void пускToolStripMenuItem_Click(object sender, EventArgs e)
         {
-           // richTextBox2.Text = richTextBox1.Text;
+            // richTextBox2.Text = richTextBox1.Text;
             string input = richTextBox1.Text;
 
             Dictionary<LexemeType, int> lexemeCodes = new Dictionary<LexemeType, int>()
@@ -351,7 +388,7 @@ namespace TextEditor1502
             string[] pluses = { "+" };
             string[] minuses = { "-" };
             string[] semicolones = { ";" };
-           
+
 
 
             List<Lexeme> lexemes = new List<Lexeme>();
@@ -405,7 +442,7 @@ namespace TextEditor1502
                 if (found) continue;
 
                 //+
-               foreach (string op in pluses)
+                foreach (string op in pluses)
                 {
                     if (input.Substring(position).StartsWith(op))
                     {
@@ -417,7 +454,7 @@ namespace TextEditor1502
                 }
 
                 if (found) continue;
-             
+
 
                 //-
                 foreach (string op in minuses)
@@ -430,7 +467,7 @@ namespace TextEditor1502
                         break;
                     }
                 }
-               
+
                 if (found) continue;
 
                 //;
@@ -494,12 +531,106 @@ namespace TextEditor1502
             }
 
             dataGridView1.Rows.Clear();
-            foreach (Lexeme lexeme in lexemes)
-            {
-                dataGridView1.Rows.Add(lexeme.Code, lexeme.Type, lexeme.Token, lexeme.StartPosition, lexeme.EndPosition);
-            }
+            CheckLexem(lexemes);
+            //foreach (Lexeme lexeme in lexemes)
+            //{
+            //    dataGridView1.Rows.Add(lexeme.Code, lexeme.Type, lexeme.Token, lexeme.StartPosition, lexeme.EndPosition);
+
+            //}
         }
 
+        public void CheckLexem(List<Lexeme> lexemes)
+        {
+            int step = 0;
+            int counterError = 0;
+            for (int i = 0; i < lexemes.Count; i++)
+            {
+                Lexeme lexeme = lexemes[i];
+                if (lexeme.Type == LexemeType.Delimiter)
+                    continue;
+                switch (step)
+                {
+                    case 0:
+                        if (lexeme.Type == LexemeType.Keyword2)
+                            step++;
+                        else
+                        {
+                            dataGridView1.Rows.Add(1, lexeme.Type, "Ожидается объявление константы", lexeme.StartPosition, lexeme.EndPosition);
+                            step = 0;
+                            counterError++;
+                        }
+                        break;
+                    case 1:
+                        if (lexeme.Type == LexemeType.DataType)
+                            step++;
+                        else
+                        {
+                            dataGridView1.Rows.Add(2, lexeme.Type, "Ожидается тип константы", lexeme.StartPosition, lexeme.EndPosition);
+                            step = 0;
+                            counterError++;
+                        }
+                        break;
+                    case 2:
+                        if (lexeme.Type == LexemeType.Identifier)
+                            step++;
+                        else
+                        {
+                            dataGridView1.Rows.Add(3, lexeme.Type, "Ожидается идентификатор константы", lexeme.StartPosition, lexeme.EndPosition);
+                            step = 0;
+                            counterError++;
+                        }
+                        break;
+                    case 3:
+                        if (lexeme.Type == LexemeType.Equally)
+                            step++;
+                        else
+                        {
+                            dataGridView1.Rows.Add(4, lexeme.Type, "Ожидается присваение константы", lexeme.StartPosition, lexeme.EndPosition);
+                            step = 0;
+                            counterError++;
+                        }
+                        break;
+                    case 4:
+                        if (lexeme.Type == LexemeType.Plus)
+                            continue;
+                        else if (lexeme.Type == LexemeType.Minus)
+                            continue;
+                        else if (lexeme.Type == LexemeType.Number)
+                            step++;
+                        else
+                        {
+                            dataGridView1.Rows.Add(5, lexeme.Type, "Ожидается инициализация константы", lexeme.StartPosition, lexeme.EndPosition);
+                            step = 0;
+                            counterError++;
+                        }
+                        break;
+                    case 5:
+                        if (lexeme.Type == LexemeType.Semicolon)
+                        {
+                            dataGridView1.Rows.Add(6, lexeme.Type, "Успешно создано!", lexeme.StartPosition, lexeme.EndPosition);
+                            step = 0;
+                        }
+                        else
+                        {
+                            dataGridView1.Rows.Add(6, lexeme.Type, "Ожидается завершающая лексема.", lexeme.StartPosition, lexeme.EndPosition);
+                            step = 0;
+                            counterError++;
+                        }
+                        break;
+
+                    default:
+                        break;
+                }
+
+            }
+            if (step != 0)
+            {
+                dataGridView1.Rows.Add("Неправильно объявлена лексема");
+                counterError++;
+            }
+            if (counterError != 0)
+                textBox1.Text = counterError.ToString();
+        }
         private void Form1_DragDrop(object sender, DragEventArgs e)
         {
             // Получение списка файлов, перетаскиваемых на элемент управления 
@@ -554,6 +685,17 @@ namespace TextEditor1502
         {
 
         }
-    }
 
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+    }
 }
+    
